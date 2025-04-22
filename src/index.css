@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .property-card {
+    @apply relative overflow-hidden rounded-xl bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 transition-all duration-300;
+  }
+  
+  .property-card:hover {
+    @apply shadow-soft dark:shadow-none transform -translate-y-1;
+  }
+  
+  .property-image-container {
+    @apply relative aspect-[4/3] overflow-hidden;
+  }
+  
+  .property-badge {
+    @apply absolute top-3 left-3 px-2 py-1 text-xs font-medium rounded-md z-10;
+  }
+  
+  .property-badge.sale {
+    @apply bg-primary text-white;
+  }
+  
+  .property-badge.rent {
+    @apply bg-secondary text-white;
+  }
+  
+  .property-favorite {
+    @apply absolute top-3 right-3 p-1.5 bg-white/80 dark:bg-surface-800/80 backdrop-blur-sm rounded-full z-10 
+           hover:bg-white dark:hover:bg-surface-700 transition-colors;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-surface-300 dark:border-surface-600 
+           bg-white dark:bg-surface-800 text-surface-800 dark:text-surface-100
+           focus:outline-none focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary-light/50
+           placeholder:text-surface-400 dark:placeholder:text-surface-500
+           transition-all duration-200;
+  }
+  
+  .btn {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white
+           dark:focus:ring-offset-surface-900;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white
+           focus:ring-primary/50;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary-dark text-white
+           focus:ring-secondary/50;
+  }
+  
+  .btn-outline {
+    @apply border border-surface-300 dark:border-surface-600 bg-transparent
+           hover:bg-surface-100 dark:hover:bg-surface-700
+           text-surface-700 dark:text-surface-300
+           focus:ring-surface-200 dark:focus:ring-surface-700;
+  }
+  
+  .btn-accent {
+    @apply bg-accent hover:bg-accent/90 text-white
+           focus:ring-accent/50;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+}

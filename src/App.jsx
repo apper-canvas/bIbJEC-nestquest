@@ -1,0 +1,168 @@
+import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { Sun, Moon, Home, Search, Heart, User, Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Home from './pages/Home'
+import NotFound from './pages/NotFound'
+
+function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode')
+    return savedMode ? JSON.parse(savedMode) : 
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+  })
+  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    localStorage.setItem('darkMode', JSON.stringify(darkMode))
+  }, [darkMode])
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev)
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(prev => !prev)
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-surface-800/80 backdrop-blur-md border-b border-surface-200 dark:border-surface-700">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">N</span>
+            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              NestQuest
+            </h1>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="/" className="flex items-center gap-1.5 font-medium text-surface-700 dark:text-surface-200 hover:text-primary dark:hover:text-primary-light transition-colors">
+              <Home size={18} />
+              <span>Home</span>
+            </a>
+            <a href="#search" className="flex items-center gap-1.5 font-medium text-surface-700 dark:text-surface-200 hover:text-primary dark:hover:text-primary-light transition-colors">
+              <Search size={18} />
+              <span>Search</span>
+            </a>
+            <a href="#saved" className="flex items-center gap-1.5 font-medium text-surface-700 dark:text-surface-200 hover:text-primary dark:hover:text-primary-light transition-colors">
+              <Heart size={18} />
+              <span>Saved</span>
+            </a>
+            <a href="#profile" className="flex items-center gap-1.5 font-medium text-surface-700 dark:text-surface-200 hover:text-primary dark:hover:text-primary-light transition-colors">
+              <User size={18} />
+              <span>Profile</span>
+            </a>
+          </nav>
+          
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            
+            <button 
+              className="md:hidden p-2 rounded-full bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+            
+            <a 
+              href="#login" 
+              className="hidden md:flex items-center justify-center px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white font-medium transition-colors"
+            >
+              Sign In
+            </a>
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden overflow-hidden"
+            >
+              <nav className="flex flex-col py-3 px-4 space-y-3 border-t border-surface-200 dark:border-surface-700">
+                <a href="/" className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors">
+                  <Home size={18} />
+                  <span>Home</span>
+                </a>
+                <a href="#search" className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors">
+                  <Search size={18} />
+                  <span>Search</span>
+                </a>
+                <a href="#saved" className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors">
+                  <Heart size={18} />
+                  <span>Saved</span>
+                </a>
+                <a href="#profile" className="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors">
+                  <User size={18} />
+                  <span>Profile</span>
+                </a>
+                <a 
+                  href="#login" 
+                  className="flex items-center justify-center p-2 rounded-lg bg-primary hover:bg-primary-dark text-white font-medium transition-colors"
+                >
+                  Sign In
+                </a>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+      <footer className="bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">N</span>
+              </div>
+              <p className="text-sm text-surface-600 dark:text-surface-400">
+                © {new Date().getFullYear()} NestQuest. All rights reserved.
+              </p>
+            </div>
+            <div className="flex gap-6">
+              <a href="#terms" className="text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">
+                Terms
+              </a>
+              <a href="#privacy" className="text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">
+                Privacy
+              </a>
+              <a href="#contact" className="text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+export default App
