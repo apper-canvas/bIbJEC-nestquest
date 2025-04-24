@@ -1,41 +1,47 @@
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Home } from 'lucide-react'
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Home, Search } from 'lucide-react';
 
 function NotFound() {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16">
+    <div className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[70vh]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center max-w-md"
+        className="text-center max-w-xl"
       >
-        <div className="mb-6 relative">
-          <div className="text-9xl font-bold text-primary/10 dark:text-primary/5">404</div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-2xl md:text-3xl font-bold text-surface-800 dark:text-white">Page Not Found</div>
-          </div>
+        <div className="mb-6 bg-primary/10 dark:bg-primary/20 h-24 w-24 rounded-full flex items-center justify-center mx-auto">
+          <span className="text-primary text-5xl font-bold">404</span>
         </div>
         
+        <h1 className="text-3xl font-bold mb-4">Page Not Found</h1>
+        
         <p className="text-surface-600 dark:text-surface-400 mb-8">
-          The page you're looking for doesn't exist or has been moved.
+          The page you're looking for doesn't exist or has been moved. 
+          Let's get you back on track to finding your dream home.
         </p>
         
-        <Link 
-          to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary-dark text-white font-medium transition-colors"
-        >
-          <Home size={18} />
-          Back to Home
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link 
+            to="/" 
+            className="flex items-center justify-center gap-2 btn btn-primary"
+          >
+            <Home size={18} />
+            <span>Back to Home</span>
+          </Link>
+          
+          <Link 
+            to="/search" 
+            className="flex items-center justify-center gap-2 btn btn-outline"
+          >
+            <Search size={18} />
+            <span>Search Properties</span>
+          </Link>
+        </div>
       </motion.div>
-      
-      {/* Decorative elements */}
-      <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-secondary/5 dark:bg-secondary/10 rounded-full blur-3xl -z-10"></div>
     </div>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;
